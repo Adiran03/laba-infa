@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ультра-подробная шпаргалка к защите ЛР №1 — Чнаваян Адриан</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #090d16;
+            color: #e2e8f0;
+            line-height: 1.65;
+            margin: 0;
+            padding: 24px;
+        }
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+        .header {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 26px 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+        h1 {
+            margin: 0 0 10px 0;
+            color: #38bdf8;
+            font-size: 1.75em;
+        }
+        .badges span {
+            display: inline-block;
+            background: #020617;
+            border: 1px solid #38bdf8;
+            color: #7dd3fc;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.88em;
+            margin: 4px 6px 0 0;
+        }
+        h2 {
+            color: #34d399;
+            border-bottom: 2px solid #1e293b;
+            padding-bottom: 8px;
+            margin-top: 36px;
+        }
+        .block-card {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 22px;
+        }
+        .code-line {
+            background: #030712;
+            border-left: 4px solid #38bdf8;
+            padding: 10px 14px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            color: #fbbf24;
+            font-size: 0.95em;
+            border-radius: 0 8px 8px 0;
+            margin: 14px 0 8px 0;
+            overflow-x: auto;
+        }
+        .micro-list {
+            margin: 6px 0 14px 18px;
+            padding: 0;
+        }
+        .micro-list li {
+            margin-bottom: 6px;
+        }
+        code {
+            font-family: 'Consolas', monospace;
+            background: #020617;
+            color: #38bdf8;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.94em;
+        }
+        .trap {
+            background: #281117;
+            border: 1px solid #5c1d28;
+            border-left: 5px solid #f87171;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin: 16px 0;
+        }
+        .tip {
+            background: #0f2922;
+            border: 1px solid #164e3f;
+            border-left: 5px solid #34d399;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin: 16px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            background: #111827;
+            font-size: 0.94em;
+        }
+        th, td {
+            border: 1px solid #1f2937;
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background: #1e3a8a;
+            color: #ffffff;
+        }
+        tr:nth-child(even) {
+            background: #0f172a;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="header">
+        <h1>Ультра-подробная шпаргалка по каждой строчке <code>main.c</code></h1>
+        <p style="margin: 0 0 10px 0; color: #94a3b8;">Разбор каждой директивы, скобки, значка <code>%</code>, амперсанда <code>&amp;</code>, байтов и дополнительного кода для 100% защиты ЛР №1</p>
+        <div class="badges">
+            <span>Студент: Чнаваян Адриан</span>
+            <span>Группа: М03-104БВ-26</span>
+            <span>Вариант: 29</span>
+        </div>
+    </div>
+
+    <div class="trap">
+        <b>ГЛАВНОЕ ПРАВИЛО ТЕРМИНОЛОГИИ НА ЗАЩИТЕ:</b><br>
+        Никогда не называй <code>%d</code>, <code>%c</code>, <code>%f</code> <b>«указателями»</b>! В Си указатели — это совсем другая тема (<code>int *p</code>).<br>
+        Значки с процентом называются <b>СПЕЦИФИКАТОРАМИ ФОРМАТА</b> (или управляющими символами формата).
+    </div>
+
+    <!-- СЕКЦИЯ 1 -->
+    <h2>1. Заголовочные файлы и старт программы (строки 1–15)</h2>
+    <div class="block-card">
+        <div class="code-line">#include &lt;stdio.h&gt;<br>#include &lt;limits.h&gt;<br>#include &lt;float.h&gt;<br>#include &lt;windows.h&gt;</div>
+        <ul class="micro-list">
+            <li><code>#</code> — знак директивы <b>препроцессора</b>. Это команда, которая срабатывает ДО того, как компилятор начнёт переводить код в машинный вид.</li>
+            <li><code>include</code> — буквально «включить/вставить сюда содержимое файла».</li>
+            <li><code>&lt;stdio.h&gt;</code> (Standard Input/Output Header) — заголовочный файл стандартного ввода-вывода. Без него компилятор не знает, что такое <code>printf</code> и <code>scanf</code>.</li>
+            <li><code>&lt;limits.h&gt;</code> — файл с готовыми константами минимальных и максимальных значений для <b>целых</b> типов (<code>CHAR_MIN</code>, <code>CHAR_MAX</code>, <code>UCHAR_MAX</code>, <code>INT_MIN</code>, <code>INT_MAX</code>, <code>UINT_MAX</code>).</li>
+            <li><code>&lt;float.h&gt;</code> — файл с границами для <b>вещественных (дробных)</b> типов (<code>FLT_MIN</code>, <code>FLT_MAX</code>, <code>DBL_MIN</code>, <code>DBL_MAX</code>).</li>
+            <li><code>&lt;windows.h&gt;</code> — системный заголовочный файл Windows API. Подключён только ради двух строчек ниже, которые чинят русский шрифт в консоли.</li>
+        </ul>
+
+        <div class="code-line">int main() {</div>
+        <ul class="micro-list">
+            <li><code>main()</code> — главная функция, <b>точка входа</b>. Операционная система всегда запускает программу ровно с первой строчки внутри <code>main</code>.</li>
+            <li><code>int</code> перед <code>main</code> — тип возвращаемого значения. Означает, что при закрытии программа вернёт системе целое число (код завершения).</li>
+            <li><code>{</code> — открывающая фигурная скобка, начало тела функции <code>main</code>.</li>
+        </ul>
+
+        <div class="code-line">SetConsoleCP(CP_UTF8);<br>SetConsoleOutputCP(CP_UTF8);</div>
+        <ul class="micro-list">
+            <li>По умолчанию терминал Windows работает в старой кодировке (CP866 / CP1251), а наш файл <code>main.c</code> сохранён в современной кодировке <b>UTF-8</b>.</li>
+            <li><code>SetConsoleCP(CP_UTF8)</code> — переключает <b>ввод</b> с клавиатуры в UTF-8.</li>
+            <li><code>SetConsoleOutputCP(CP_UTF8)</code> — переключает <b>вывод</b> на экран в UTF-8 (кодовая страница 65001), чтобы кириллица печаталась нормальными буквами, а не «кракозябрами».</li>
+            <li><code>;</code> (точка с запятой) — обязательный разделитель инструкций в языке Си (означает конец команды).</li>
+        </ul>
+
+        <div class="code-line">printf("Студент: Чнаваян Адриан | Группа: М03-104БВ-26 | Вариант: 29
+");</div>
+        <ul class="micro-list">
+            <li><code>printf(...)</code> — функция форматного вывода текста в консоль (Print Formatted).</li>
+            <li><code>
+</code> — управляющая последовательность (escape-последовательность) <b>переноса строки</b> (New Line). Без <code>
+</code> следующий <code>printf</code> начнёт печатать прямо встык на той же строке.</li>
+        </ul>
+    </div>
+
+    <!-- СЕКЦИЯ 2 -->
+    <h2>2. Задание 1 — Ввод, эхопечать, форматы, системы счисления, <code>sizeof()</code></h2>
+    <div class="block-card">
+        <div class="code-line">char c_val;<br>int i_val;<br>float f_val;<br>double d_val;</div>
+        <ul class="micro-list">
+            <li>Объявление четырёх переменных базовых типов — процессор выделяет под них ячейки в оперативной памяти:</li>
+            <li><code>char c_val;</code> — символьный тип, занимает <b>1 байт (8 бит)</b>. Хранит ASCII-код одного символа.</li>
+            <li><code>int i_val;</code> — целочисленный тип со знаком, занимает <b>4 байта (32 бита)</b>.</li>
+            <li><code>float f_val;</code> — вещественный (дробный) тип одинарной точности, занимает <b>4 байта (32 бита)</b>, хранит ~6–7 точных значащих цифр.</li>
+            <li><code>double d_val;</code> — вещественный тип двойной точности, занимает <b>8 байт (64 бита)</b>, хранит ~15–16 точных значащих цифр.</li>
+        </ul>
+
+        <div class="code-line">printf("Введите символ (char): ");<br>scanf(" %c", &amp;c_val);<br>printf("Эхопечать char: %c
+
+", c_val);</div>
+        <ul class="micro-list">
+            <li><code>scanf(...)</code> — функция форматного ввода с клавиатуры (Scan Formatted).</li>
+            <li><b>Микро-деталь №1 — ПРОБЕЛ перед <code>%c</code> (<code>" %c"</code>):</b> Если пользователь перед этим вводил число и нажал <code>Enter</code>, в буфере ввода остаётся символ <code>
+</code>. Без пробела <code>scanf("%c")</code> моментально проглотит этот <code>Enter</code> и пропустит ввод символа! Пробел заставляет <code>scanf</code> пропустить все невидимые пробелы и переносы строк.</li>
+            <li><b>Микро-деталь №2 — АМПЕРСАНД <code>&amp;</code> перед <code>c_val</code> (<code>&amp;c_val</code>):</b> Это операция взятия <b>адреса переменной в оперативной памяти</b>. Функции <code>scanf</code> нужно положить введённое значение прямо в ячейку памяти, поэтому ей передаётся адрес ячейки, а не само значение.</li>
+            <li><b>Эхопечать:</b> сразу после <code>scanf</code> вызываем <code>printf</code> с тем же спецификатором <code>%c</code> (уже БЕЗ <code>&amp;</code>, так как <code>printf</code> нужно только прочитать значение), чтобы убедиться, что программа считала всё верно.</li>
+        </ul>
+
+        <div class="code-line">scanf("%d", &amp;i_val);<br>scanf("%f", &amp;f_val);<br>scanf("%lf", &amp;d_val);</div>
+        <ul class="micro-list">
+            <li><code>%d</code> — считывает целое десятичное число (decimal) в 4-байтную ячейку <code>int</code>.</li>
+            <li><code>%f</code> — считывает дробное число в 4-байтную ячейку <code>float</code>.</li>
+            <li><code>%lf</code> (Long Float) — считывает дробное число в <b>8-байтную</b> ячейку <code>double</code>. <b>Ловушка:</b> если в <code>scanf</code> для <code>double</code> написать просто <code>%f</code> вместо <code>%lf</code>, запишутся только 4 байта из 8, и в переменной окажется мусор!</li>
+        </ul>
+
+        <div class="code-line">printf("char=[%4c] | int=[%8d] | float=[%10.2f] | double=[%12.4lf]
+
+", c_val, i_val, f_val, d_val);</div>
+        <ul class="micro-list">
+            <li>Пункт 1.2: вывод всех 4 значений <b>одним</b> оператором <code>printf</code> с управлением шириной поля и точностью:</li>
+            <li><code>%4c</code> — выделяет под символ поле шириной минимум в <b>4 знакоместа</b> (слева добавятся 3 пробела, выравнивание по правому краю).</li>
+            <li><code>%8d</code> — выделяет под целое число поле шириной минимум в <b>8 знакомест</b> (например, число <code>29</code> выведется как <code>"      29"</code>). Если число длиннее 8 символов — оно напечатается целиком, ничего не обрежется.</li>
+            <li><code>%10.2f</code> — число <b>ДО точки (<code>10</code>)</b> задаёт общую ширину поля (включая саму точку и цифры после неё), а число <b>ПОСЛЕ точки (<code>2</code>)</b> задаёт количество знаков после запятой (округляет до сотых).</li>
+            <li><code>%12.4lf</code> — общая ширина поля <b>12</b> позиций, <b>4</b> знака после запятой.</li>
+            <li>Квадратные скобки <code>[...]</code> в строке поставлены специально для наглядности, чтобы преподаватель сразу видел границы выделенных полей и пробелы выравнивания!</li>
+        </ul>
+
+        <div class="code-line">printf("char:   символ='%c', dec=%d, oct=%o, hex=%X
+",<br>       c_val, (unsigned char)c_val, (unsigned char)c_val, (unsigned char)c_val);<br>printf("int:    dec=%d, oct=%o, hex=%X
+", i_val, i_val, i_val);<br>printf("float:  exp=%e
+", f_val);<br>printf("double: exp=%e
+
+", d_val);</div>
+        <ul class="micro-list">
+            <li>Пункт 1.3: в памяти число хранится в двоичном виде, а спецификаторы просто отображают его в разных системах счисления:</li>
+            <li><code>%c</code> — выводит символ из таблицы ASCII.</li>
+            <li><code>%d</code> — выводит код в <b>десятичной</b> системе со знаком (Decimal).</li>
+            <li><code>%o</code> — выводит в <b>восьмеричной</b> системе (Octal, цифры 0–7).</li>
+            <li><code>%X</code> — выводит в <b>шестнадцатеричной</b> системе (Hexadecimal, цифры 0–9 и заглавные буквы A–F; маленькая <code>%x</code> вывела бы строчные a–f).</li>
+            <li><b>Зачем написано <code>(unsigned char)c_val</code>?</b> Это явное приведение типа. Если ввести русскую букву или символ с кодом &gt; 127, знаковый <code>char</code> сочтёт его отрицательным, и <code>%o</code> / <code>%X</code> распечатают его как огромное 4-байтное число (<code>FFFFFF...</code>). Приведение к <code>(unsigned char)</code> гарантирует аккуратный 1-байтный код от 0 до 255.</li>
+            <li><code>%e</code> — выводит дробное число в <b>экспоненциальной (научной) форме</b>: мантисса с одной цифрой до точки и степень десятки (например, <code>1.250000e+02</code> означает 1.25 &times; 10<sup>2</sup> = 125).</li>
+        </ul>
+
+        <div class="code-line">printf("sizeof(char)   = %zu байт
+", sizeof(char));</div>
+        <ul class="micro-list">
+            <li><code>sizeof(тип)</code> — это <b>унарная операция</b> (не функция!), которая возвращает размер типа данных или переменной в <b>байтах</b>. Вычисляется ещё на этапе компиляции.</li>
+            <li><code>%zu</code> — специальный беззнаковый спецификатор формата для типа <code>size_t</code>, который возвращает оператор <code>sizeof</code>.</li>
+        </ul>
+    </div>
+
+    <!-- СЕКЦИЯ 3 -->
+    <h2>3. Задание 2 — Предельные значения из <code>&lt;limits.h&gt;</code> и <code>&lt;float.h&gt;</code></h2>
+    <div class="block-card">
+        <div class="code-line">printf("CHAR_MIN   = %d 		 CHAR_MAX   = %d
+", CHAR_MIN, CHAR_MAX);<br>printf("UCHAR_MAX  = %u
+", UCHAR_MAX);<br>printf("INT_MIN    = %d 	 INT_MAX    = %d
+", INT_MIN, INT_MAX);<br>printf("UINT_MAX   = %u
+", UINT_MAX);<br>printf("FLT_MIN    = %e 	 FLT_MAX    = %e
+", FLT_MIN, FLT_MAX);<br>printf("DBL_MIN    = %e 	 DBL_MAX    = %e
+
+", DBL_MIN, DBL_MAX);</div>
+        <ul class="micro-list">
+            <li><code>	</code> — символ горизонтальной табуляции (как клавиша Tab), выравнивает второй столбец.</li>
+            <li><code>CHAR_MIN</code> (<code>-128</code>) и <code>CHAR_MAX</code> (<code>127</code>) — границы знакового 1-байтного <code>char</code> (от -2<sup>7</sup> до 2<sup>7</sup> - 1). Выводим через <code>%d</code>.</li>
+            <li><code>UCHAR_MAX</code> (<code>255</code>) — максимум беззнакового <code>unsigned char</code> (2<sup>8</sup> - 1). Минимум у беззнаковых всегда <code>0</code>. Выводим через <code>%u</code> (unsigned).</li>
+            <li><code>INT_MIN</code> (<code>-2147483648</code>) и <code>INT_MAX</code> (<code>2147483647</code>) — границы 4-байтного знакового <code>int</code> (от -2<sup>31</sup> до 2<sup>31</sup> - 1).</li>
+            <li><code>UINT_MAX</code> (<code>4294967295</code>) — максимум 4-байтного беззнакового <code>unsigned int</code> (2<sup>32</sup> - 1). <b>Важно:</b> выводить строго через <code>%u</code>! Если написать <code>%d</code>, то <code>4294967295</code> выведется как <code>-1</code>.</li>
+            <li><code>FLT_MIN</code> / <code>FLT_MAX</code> (~<code>1.17e-38</code> ... <code>3.40e+38</code>) и <code>DBL_MIN</code> / <code>DBL_MAX</code> (~<code>2.22e-308</code> ... <code>1.79e+308</code>) — минимальное положительное нормализованное и максимальное значения для <code>float</code> и <code>double</code>.</li>
+        </ul>
+    </div>
+
+    <!-- СЕКЦИЯ 4 -->
+    <h2>4. Задание 3 — Цепочки преобразований (расширение и усечение)</h2>
+    <div class="block-card">
+        <div class="code-line">char c3; short int s3; int i3;<br>unsigned char uc3; unsigned short int us3; unsigned int ui3;</div>
+        <ul class="micro-list">
+            <li>Создаём 6 переменных: 3 знаковых (1, 2 и 4 байта) и 3 беззнаковых (1, 2 и 4 байта).</li>
+        </ul>
+
+        <div class="code-line">c3 = CHAR_MAX; s3 = c3; i3 = s3;<br>printf("char -> short -> int: %d -> %d -> %d
+", c3, s3, i3);</div>
+        <ul class="micro-list">
+            <li><b>Расширение типа (от меньшего к большему: 1 байт &rarr; 2 байта &rarr; 4 байта):</b></li>
+            <li>Значение перекладывается по цепочке слева направо. Так как ячейка становится шире, число помещается целиком без потерь (<code>127 &rarr; 127 &rarr; 127</code>).</li>
+            <li>Для отрицательного <code>CHAR_MIN = -128</code> (в двоичном виде <code>10000000</code>) при расширении до 2 и 4 байт срабатывает <b>знаковое расширение</b>: пустые левые байты заполняются единицами (<code>11111111 10000000</code>), чтобы сохранить отрицательное значение <code>-128</code> в дополнительном коде.</li>
+        </ul>
+
+        <div class="code-line">i3 = INT_MAX; s3 = i3; c3 = s3;<br>printf("int -> short -> char: %d -> %d -> %d
+", i3, s3, c3);</div>
+        <ul class="micro-list">
+            <li><b>Сужение / усечение типа (от большего к меньшему: 4 байта &rarr; 2 байта &rarr; 1 байт):</b></li>
+            <li>Когда мы присваиваем 4-байтное число в 2-байтный <code>short</code>, процессор <b>просто отрезает 2 старших (левых) байта</b> и оставляет только 2 младших (правых). Затем при присваивании в 1-байтный <code>char</code> отрезается ещё один байт — остаётся только самый правый байт.</li>
+            <li>У <code>INT_MAX = 2147483647</code> в двоичном виде <code>01111111 11111111 11111111 11111111</code>. Отрезали левые байты &rarr; осталось <code>11111111</code>. Так как <code>char</code> знаковый, а самый левый бит равен <code>1</code>, в дополнительном коде это число равно <b><code>-1</code></b>!</li>
+        </ul>
+
+        <div class="code-line">i3 = 483; s3 = i3; c3 = s3;<br>printf("int(483) -> short -> char: %d -> %d -> %d
+", i3, s3, c3);</div>
+        <ul class="micro-list">
+            <li><b>Пример из методички (<code>483 &rarr; 483 &rarr; -29</code>):</b></li>
+            <li>Число <code>483</code> в 2 байтах (<code>short</code>) = <code>00000001 11100011</code> (влезло полностью).</li>
+            <li>Перекладываем в 1 байт (<code>char</code>): левый байт <code>00000001</code> отбрасывается, остаётся <code>11100011</code>.</li>
+            <li><b>Как перевести <code>11100011</code> в десятичное число:</b> левый бит <code>1</code> &rarr; число отрицательное. Инвертируем биты: <code>00011100</code> (это 16 + 8 + 4 = 28). Прибавляем 1: 28 + 1 = 29. Ставим минус &rarr; <b><code>-29</code></b>.</li>
+        </ul>
+
+        <div class="code-line">i3 = -300; s3 = i3; c3 = s3;</div>
+        <ul class="micro-list">
+            <li><b>Отрицательный <code>int</code> (<code>-300 &rarr; -300 &rarr; -44</code>):</b></li>
+            <li><code>300</code> в 2 байтах = <code>00000001 00101100</code>. Переводим <code>-300</code> в дополнительный код (инверсия + 1): <code>11111110 11010100</code>.</li>
+            <li>Отрезаем левый байт при записи в <code>char</code> &rarr; остаётся <code>11010100</code>.</li>
+            <li>Переводим обратно: инверсия <code>00101011</code> (43) + 1 = 44 &rarr; <b><code>-44</code></b>.</li>
+        </ul>
+    </div>
+
+    <!-- СЕКЦИЯ 5 -->
+    <h2>5. Задание 4 — Переполнение границ и завершение (строки 130–153)</h2>
+    <div class="block-card">
+        <div class="code-line">int s_max = INT_MAX; s_max = s_max + 1;<br>unsigned int u_max = UINT_MAX; u_max = u_max + 1;<br>int s_min = INT_MIN; s_min = s_min - 1;<br>unsigned int u_min = 0; u_min = u_min - 1;</div>
+        <ul class="micro-list">
+            <li><code>INT_MAX + 1</code>: <code>01111111...1111 + 1 = 10000000...0000</code>. Единица попадает в знаковый (31-й) бит, и максимальное положительное число <code>2147483647</code> скачком превращается в <code>-2147483648</code> (<code>INT_MIN</code>). <i>(Примечание для отличников: по стандарту языка Си знаковое переполнение является неопределённым поведением — Undefined Behavior, но на процессорах x86 в дополнительном коде оно работает именно так).</i></li>
+            <li><code>UINT_MAX + 1</code>: <code>11111111...1111 + 1 = 1 00000000...0000</code>. Возникает перенос в 33-й бит, который не влезает в 4 байта и отбрасывается — остаётся <b><code>0</code></b>.</li>
+            <li><code>INT_MIN - 1</code>: из <code>10000000...0000</code> вычитаем 1 и получаем <code>01111111...1111</code> — скачок обратно в <b><code>2147483647</code></b>.</li>
+            <li><code>0 - 1</code> (для <code>unsigned int</code>): заём из старшего разряда превращает все 32 бита в единицы (<code>1111...1111</code>) — получаем <b><code>4294967295</code></b> (<code>UINT_MAX</code>).</li>
+        </ul>
+
+        <div class="code-line">    return 0;<br>}</div>
+        <ul class="micro-list">
+            <li><code>return 0;</code> — завершает работу функции <code>main</code> и возвращает операционной системе код <code>0</code> (сигнал того, что программа отработала штатно и без ошибок).</li>
+            <li><code>}</code> — закрывающая фигурная скобка, конец программы.</li>
+        </ul>
+    </div>
+
+    <div class="tip">
+        <b>Короткий чек-лист перед самым ответом преподавателю:</b>
+        <ol style="margin-bottom: 0;">
+            <li>Значки <code>%d</code>, <code>%c</code>, <code>%lf</code> называй <b>спецификаторами формата</b>.</li>
+            <li>Зачем пробел перед <code>%c</code> в <code>scanf(" %c", &amp;c_val)</code>? — <i>Чтобы пропустить символ переноса строки <code>
+</code>, оставшийся в буфере клавиатуры.</i></li>
+            <li>Зачем <code>&amp;</code> в <code>scanf</code>? — <i>Чтобы передать адрес переменной в памяти, куда нужно записать введённое число.</i></li>
+            <li>Что происходит при сужении типа (<code>int &rarr; char</code>)? — <i>Усечение (отбрасывание) старших байтов; если старший бит оставшегося байта равен 1, знаковый тип читает число как отрицательное в дополнительном коде.</i></li>
+        </ol>
+    </div>
+
+</div>
+</body>
+</html>
